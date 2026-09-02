@@ -1,32 +1,45 @@
-# main.py
 
-# "import" brings in an external library, similar to `import requests from 'requests'` in JS
-import requests
-
-# "def" defines a function — like `function fetchUser(userId) { ... }` in JS
-# The `-> dict` part is optional and just documents what type the function returns
-def fetch_user(user_id):
-    url = f"https://jsonplaceholder.typicode.com/users/{user_id}"
-    # f"..." is an f-string — Python's version of a template literal (`...${x}...`)
-    # The variable goes inside curly braces instead of ${}
-
-    response = requests.get(url)
-    # This makes an HTTP GET request, like `fetch(url)` or `axios.get(url)`
-
-    return response.json()
-    # .json() parses the response body as JSON, same idea as `response.json()` in fetch
-
-
-# This is the "entry point" — the code that actually runs when you execute the file
 def main():
-    user = fetch_user(1)
-    print("Name:", user["name"])
-    print("Email:", user["email"])
-    # print() is Python's console.log()
-    # user["name"] accesses a dictionary key — like user.name or user["name"] in JS
+    # Type check
+    # number_int = 900
+    # print(type(number_int))
+    # num_float = 4.5
+    # print(type(num_float))
+    # str_value = "Ritik"
+    # print(type(str_value))
+    # bool_value = True
+    # print(type(bool_value))
+    # none_value = None
+    # print(type(none_value))
 
+    # Guessing the output
+    # values = [0, 1, "", "hello", None, [], [0], False, True, 0.0, "0"]
 
-# This line means: "only run main() if this file is being run directly"
-# (not if some other file imports this one). You'll see this at the bottom of almost every Python script.
+    # for v in values:
+    #     if v:
+    #         print(v, "→ truthy")
+    #     else:
+    #         print(v, "→ falsy")
+
+    # Fixing the bug
+    # cart = []
+
+    # if cart:
+    #     print("Cart has items")
+    # else:
+    #     print("Cart is empty")
+
+    #  F string
+    # age = 26
+    # message = f"I am {age} years old"
+    # print(message)
+
+    # Reassignment
+    # score = 10
+    # score = "ten"
+    # print(score)
+    pass
+    
+
 if __name__ == "__main__":
     main()
