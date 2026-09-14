@@ -1,90 +1,65 @@
-def calculate_area(length, width):
-    return length * width
+import json
 
-def power(base, exponent = 2):
-    return base ** exponent
+students = [
+    {"name": "Amit", "scores": [78, 85, 92]},
+    {"name": "Priya", "scores": [55, 60, 45]},
+    {"name": "Ritik", "scores": [88, 91, 95]},
+    {"name": "Neha", "scores": [30, 40, 25]},
+    {"name": "Karan", "scores": [70, 72, 68]},
+]
 
-def build_profile(name, age, city="Unknown"):
-    return {
-        "name":name, 
-        "age":age, 
-        "city":city
-        }
+def get_average(scores):
+    return sum(scores) / len(scores)
 
-def total(*args):
-    sum = 0
-    for num in args:
-        sum += num
-    return sum
-   
-def print_details(**kwargs):
-    for key, value in kwargs.items():
-        print(f"{key}: {value}")
-    print('-'*15)
+def get_grade(avg, strict = False):
+    threshold = 0
+    if strict:
+        threshold = 5
 
-def get_length(str):
-    return len(str)
-
-def filter_and_square(numbers, threshold):
-    return [num ** 2 for num in numbers if num > threshold]
-
-def describe(name, *hobbies, city="Unknown"):
-     print(f"{name} from {city} enjoys: {", ".join(hobbies)}")
+    if avg >= (90 + threshold):
+        return "A"
+    elif avg >= (75 + threshold):
+        return "B"
+    elif avg >= (60 + threshold):
+        return "C"
+    elif avg >= (40 + threshold):
+        return "D"
+    else:
+        return "F"
 
 def main():
-    #  Functions Practice
 
-    # area = calculate_area(10, 20)
-    # print(area)
+    for student in students:
+        # Average score
+        average_score = get_average(student['scores'])
+        student['average'] = round(average_score, 1)
 
-    # power_ans = power(10, 20)
-    # print(power_ans)
+        # Grade
+        grade = get_grade(student["average"], True)
+        student['grade'] = grade
 
-    # print(build_profile('Ritik', 27, "indore"))
-    # print(build_profile(age = 27,name='Ritik'))
-    # print(build_profile(age = 27,name='Ritik',city="indore"))
+        # print formatted
+        # print(f"{student["name"]} -> Avg. {student['average']} Grade: {student["grade"]}")
 
-    # print_details(name="Pooja", age= 28)
-    # print_details(nam="Prateek",room=28)
-    # print_details(name="Neelam", number= 28)
-    # print_details(name="Ritik", score= 28)
-    
-    # words = ["hi", "hello", "hey", "greetings", "sup"]
-    # result = [word for word in words if get_length(word) > 3]
-    # print(result)
+    sorted_student = sorted(students, key= lambda student : student['average'], reverse=True)
+    # print(json.dumps(sorted_student, indent=4))
+    topper = sorted_student[0]
+    # print(f"{topper["name"]} : {topper["grade"]}")
 
-    # numbers = list(range(1, 21))
-    # print(f"number : {numbers}")
-    # final_list = [num ** 2 for num in numbers if num % 2 == 0]
-    # print(final_list)
+    # Get all the student which are failed
 
-    # words = ["hi", "hello", "hey", "greetings", "sup"]
-    # result = {len(word): word for word in words if len(word) > 2}
-    # print(result)
+    failed_student  = [student for student in students if student['grade'] == "F"]
+    # print(failed_student)
 
+    all_student_averages = [student['average'] for student in students]
+    lowest_average = min(all_student_averages)
+    highest_average = max(all_student_averages)
+    class_average = round(sum(all_student_averages) / len(all_student_averages), 1)
 
-    # describe("Ritik","reading", 'Coding', "Gaming", city="Indore" )
-    # describe("Ritik", "Nothing in particular", city="Indore" )
+    # print(f"Class Average : {class_average}, Lowest Average : {lowest_average}, Highest Average : {highest_average}")
 
-    # sentences = ["the quick brown fox", "python is fun", "keep learning"]
-
-    # flat_list = [word for sentence in sentences for word in sentence.split(" ") if len(word) > 3]
-    # print(flat_list)
-
-    people = [{"name": "Amit", "age": 25}, {"name": "Priya", "age": 30}, {"name": "Ritik", "age": 26}]
-
-    # Sort by age (youngest first)
-    sorted_by_age = sorted(people, key=lambda person: person["age"])
-    print("Sorted by age (youngest first):")
-    print(sorted_by_age)
-    print()
-    
-    # Sort by name (alphabetically)
-    sorted_by_name = sorted(people, key=lambda person: person["name"])
-    print("Sorted by name (alphabetically):")
-    print(sorted_by_name)
-
-
+    name_and_grade_dic = {student["name"] : student["grade"] for student in students}
+    print(json.dumps(name_and_grade_dic, indent=4))
 
 if __name__ == "__main__":
     main()
